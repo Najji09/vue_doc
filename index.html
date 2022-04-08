@@ -6,12 +6,48 @@
     <meta name="description" content="explanation" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <title>Vue.js Study</title>
-    <script src="js/custom.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="js/custom.js" defer></script>
+    <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
+    <div class="nav-bar"></div>
     <div id="app">
-      <h1>{{product}}</h1>
+      <div class="product">
+        <div class="product-img">
+          <img v-bind:src="image" />
+        </div>
+        <div class="product-info">
+          <h1>{{product}}</h1>
+          <p v-if="inventory >= 10">In Stock</p>
+          <p v-else-if="inventory < 10 && inventory > 0">
+            Almost out of Stock!
+          </p>
+          <p v-else>Out of Stock</p>
+          <ul>
+            <li v-for="detail in details">{{detail}}</li>
+          </ul>
+          <div
+            v-for="variant in variants"
+            :key="variant.variantID"
+            class="color-box"
+            :style="{backgroundColor:variant.variantColor}"
+            @mouseOver="updateProduct(variant.variantImage)"
+          >
+            <p>{{variant.variantColor}}</p>
+          </div>
+        </div>
+        <div class="cart">
+          <button
+            v-on:click="addToCart"
+            :disabled="!inStock"
+            :class="{disabledBtn:!inStock}"
+          >
+            Add to cart
+          </button>
+          <p>cart:{{cart}}</p>
+        </div>
+      </div>
     </div>
   </body>
 </html>
