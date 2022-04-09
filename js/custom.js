@@ -2,6 +2,7 @@ var app = new Vue({
   el: '#app',
   data: {
     product: 'Socks',
+    brand: 'Vue ',
     image: './img/animal_camel.png',
     inStock: false,
     inventory: 10,
@@ -27,6 +28,11 @@ var app = new Vue({
 
     updateProduct: function (variantImage) {
       this.image = variantImage;
+    },
+  },
+  computed: {
+    title() {
+      return this.brand + ' ' + this.product;
     },
   },
 });
